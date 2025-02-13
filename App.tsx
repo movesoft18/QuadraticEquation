@@ -34,6 +34,7 @@ function App(): React.JSX.Element {
           </View>
           <View style={styles.inputView}>
             <TextInput
+              style ={styles.inputField}
               value={koeffA}
               onChangeText={onChangeA}
               placeholder="Введите А"
@@ -42,10 +43,32 @@ function App(): React.JSX.Element {
           </View>
         </View>
         <View style={styles.rowView}>
-
+        <View style={styles.textView}>
+            <Text style={styles.message}>B =</Text>
+          </View>
+          <View style={styles.inputView}>
+            <TextInput
+              style ={styles.inputField}
+              value={koeffB}
+              onChangeText={onChangeB}
+              placeholder="Введите B"
+              keyboardType="numeric"
+            />
+          </View>
         </View>
         <View style={styles.rowView}>
-
+        <View style={styles.textView}>
+            <Text style={styles.message}>C =</Text>
+          </View>
+          <View style={styles.inputView}>
+            <TextInput
+              style ={styles.inputField}
+              value={koeffC}
+              onChangeText={onChangeC}
+              placeholder="Введите C"
+              keyboardType="numeric"
+            />
+          </View>
         </View>
       </View>
       <View style={styles.buttonView}>
@@ -66,14 +89,14 @@ const styles = StyleSheet.create({
   },
   dataView: {
     flex: 9,
-    backgroundColor: 'yellow',
+    //backgroundColor: 'yellow',
   },
   rowView: {
     flexDirection:'row',
     justifyContent: 'center',
     alignItems: 'center',
     height: '15%',
-    borderWidth: 1,
+    //borderWidth: 1,
   },
   buttonView: {
     flex: 1,
@@ -89,10 +112,13 @@ const styles = StyleSheet.create({
   inputView: {
     flex: 2,
     justifyContent: 'center',
-    alignItems: 'center',   
+    alignItems: 'center',
   },
   inputField: {
-    
+    fontSize: 16,
+    fontWeight: '200',
+    borderWidth: 1,
+    width: '80%',
   },
   message: {
     fontSize: 24,
