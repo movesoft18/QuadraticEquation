@@ -21,6 +21,24 @@ function App(): React.JSX.Element {
   const [koeffA, onChangeA] = useState('');
   const [koeffB, onChangeB] = useState('');
   const [koeffC, onChangeC] = useState('');
+  const [answer, onChangeAnswer] = useState('');
+
+  function onSolvePress(){
+    let d = koeffB * koeffB - 4 * koeffA * koeffC;
+    let x1, x2;
+    if (d > 0)
+    {
+      x1 = (-koeffB + Math.sqrt(d)) / (2*koeffA);
+      x2 = (-koeffB - Math.sqrt(d)) / (2*koeffA);
+      onChangeAnswer(`x1 = ${x1}, x2 = ${x2}`);
+    } else if (d === 0){
+      x1 = (-koeffB) / (2*koeffA);
+      onChangeAnswer(`x = ${x1}`);
+    } else {
+      x1 = x2 = '';
+      onChangeAnswer('Нет решений');
+    }
+  }
 
   return (
     <SafeAreaView style={styles.mainContainer}>
@@ -70,9 +88,12 @@ function App(): React.JSX.Element {
             />
           </View>
         </View>
+        <View style={styles.rowView}>
+          <Text style={styles.message}>{answer} </Text>
+        </View>
       </View>
       <View style={styles.buttonView}>
-        <TouchableOpacity style={styles.solveButtonView}>
+        <TouchableOpacity style={styles.solveButtonView} onPress={onSolvePress}>
             <Text style = {[styles.message,{color: 'white'}]}>Решить</Text>
         </TouchableOpacity>
       </View>
@@ -116,12 +137,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '200',
     borderWidth: 1,
+    borderRadius: 10,
+    paddingLeft: 10,
     width: '80%',
   },
   solveButtonView: {
     width: '60%',
     borderWidth: 1,
     borderRadius: 20,
+    borderColor: 'lightgray',
     backgroundColor: 'deepskyblue',
     justifyContent: 'center',
     alignItems: 'center',
