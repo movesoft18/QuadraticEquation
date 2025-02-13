@@ -72,8 +72,8 @@ function App(): React.JSX.Element {
         </View>
       </View>
       <View style={styles.buttonView}>
-        <TouchableOpacity>
-          <Text style = {styles.message}>Решить</Text>
+        <TouchableOpacity style={styles.solveButtonView}>
+            <Text style = {[styles.message,{color: 'white'}]}>Решить</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -89,18 +89,16 @@ const styles = StyleSheet.create({
   },
   dataView: {
     flex: 9,
-    //backgroundColor: 'yellow',
   },
   rowView: {
     flexDirection:'row',
     justifyContent: 'center',
     alignItems: 'center',
     height: '15%',
-    //borderWidth: 1,
   },
   buttonView: {
     flex: 1,
-    backgroundColor: 'cyan',
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -119,6 +117,14 @@ const styles = StyleSheet.create({
     fontWeight: '200',
     borderWidth: 1,
     width: '80%',
+  },
+  solveButtonView: {
+    width: '60%',
+    borderWidth: 1,
+    borderRadius: 20,
+    backgroundColor: 'deepskyblue',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   message: {
     fontSize: 24,
