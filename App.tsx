@@ -21,18 +21,43 @@ function App(): React.JSX.Element {
   const [koeffA, onChangeA] = useState('');
   const [koeffB, onChangeB] = useState('');
   const [koeffC, onChangeC] = useState('');
+  const [errorA, onErrorA] = useState(false);
+  const [errorB, onErrorB] = useState(false);
+  const [errorC, onErrorC] = useState(false);
   const [answer, onChangeAnswer] = useState('');
 
   function onSolvePress(){
-    let d = koeffB * koeffB - 4 * koeffA * koeffC;
+    let a = parseFloat(koeffA);
+    let b = parseFloat(koeffB);
+    let c = parseFloat(koeffC);
+    if (isNaN(a)) {
+      onErrorA(true);
+    } else {
+      onErrorA(false);
+    }
+    if (isNaN(b)) {
+      onErrorB(true);
+    }else {
+      onErrorB(false);
+    }
+    if (isNaN(c)) {
+      onErrorC(true);
+    }else {
+      onErrorC(false);
+    }
+    if (isNaN(a) || isNaN(b) || isNaN(c)) {
+      onChangeAnswer('');
+      return;
+    }
+    let d = b * b - 4 * a * c;
     let x1, x2;
     if (d > 0)
     {
-      x1 = (-koeffB + Math.sqrt(d)) / (2*koeffA);
-      x2 = (-koeffB - Math.sqrt(d)) / (2*koeffA);
+      x1 = (-b + Math.sqrt(d)) / (2*a);
+      x2 = (-b - Math.sqrt(d)) / (2*a);
       onChangeAnswer(`x1 = ${x1}, x2 = ${x2}`);
     } else if (d === 0){
-      x1 = (-koeffB) / (2*koeffA);
+      x1 = (-b) / (2*a);
       onChangeAnswer(`x = ${x1}`);
     } else {
       x1 = x2 = '';
@@ -50,9 +75,9 @@ function App(): React.JSX.Element {
           <View style={styles.textView}>
             <Text style={styles.message}>A =</Text>
           </View>
-          <View style={styles.inputView}>
+          <View style={[styles.inputView]}>
             <TextInput
-              style ={styles.inputField}
+              style ={[styles.inputField, errorA ? styles.errorBorder : styles.normalBorder]}
               value={koeffA}
               onChangeText={onChangeA}
               placeholder="Введите А"
@@ -66,7 +91,7 @@ function App(): React.JSX.Element {
           </View>
           <View style={styles.inputView}>
             <TextInput
-              style ={styles.inputField}
+              style ={[styles.inputField, errorB && styles.errorBorder]}
               value={koeffB}
               onChangeText={onChangeB}
               placeholder="Введите B"
@@ -80,7 +105,7 @@ function App(): React.JSX.Element {
           </View>
           <View style={styles.inputView}>
             <TextInput
-              style ={styles.inputField}
+              style ={[styles.inputField, errorC ? styles.errorBorder : styles.normalBorder]}
               value={koeffC}
               onChangeText={onChangeC}
               placeholder="Введите C"
@@ -91,6 +116,11 @@ function App(): React.JSX.Element {
         <View style={styles.rowView}>
           <Text style={styles.message}>{answer} </Text>
         </View>
+        { (errorA || errorB || errorC) &&
+          <View style={styles.rowView}>
+            <Text style={styles.errorMessage}>Ошибка. Исправьте исходные данные </Text>
+          </View>
+        }
       </View>
       <View style={styles.buttonView}>
         <TouchableOpacity style={styles.solveButtonView} onPress={onSolvePress}>
@@ -151,10 +181,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   message: {
-    fontSize: 24,
+    fontSize: 20,
+    fontWeight: '400',
+    textAlign: 'center',
+  },
+  errorBorder: {
+    borderColor: 'red',
+  },
+  normalBorder: {
+    borderColor: 'black',
+  },
+  errorMessage: {
+    color: 'red',
+    fontSize: 18,
     fontWeight: '400',
   },
-
 });
 
 export default App;
